@@ -50,5 +50,5 @@ func mapGetRecordsParams(r *http.Request) (models.GetRecordsParams, error) {
 
 func GetRecords(w http.ResponseWriter, r *http.Request) {
 	// Use the handleGetRequest function with a custom query param mapper
-	handleGetRequest[models.GetRecordsParams, interface{}](w, r, "get_records_subject", mapGetRecordsParams, nil)
+	handleGetRequest[models.GetRecordsParams, interface{}](w, r, "datalake.record.get", mapGetRecordsParams, nil)
 }

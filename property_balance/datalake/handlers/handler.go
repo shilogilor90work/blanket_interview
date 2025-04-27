@@ -118,7 +118,7 @@ func ListenForGetRecords(db *gorm.DB) {
 func GetRecords(db *gorm.DB, params models.GetRecordsParams) ([]models.Record, error) {
 	// Build the query
 	query := db.Model(&models.Record{})
-
+	log.Printf("fucker 1: %v", params)
 	// Apply filters based on the parameters
 	if params.PropertyID != "" {
 		query = query.Where("property_id = ?", params.PropertyID)
@@ -143,7 +143,7 @@ func GetRecords(db *gorm.DB, params models.GetRecordsParams) ([]models.Record, e
 
 	// Apply sorting if specified
 	if params.Sort != "" {
-		query = query.Order(params.Sort)
+		query = query.Order("date " + params.Sort)
 	}
 
 	// Implement pagination
