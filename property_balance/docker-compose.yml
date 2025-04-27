@@ -28,11 +28,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.broker.rule=PathPrefix(`/api`)"
-      - "traefik.http.services.broker.loadbalancer.server.port=8080"
+      - "traefik.http.services.broker.loadbalancer.server.port=80"
     environment:
       - NATS_URL=nats://nats:4222
     ports:
-      - "8080:8080"
+      - "80:80"
     depends_on:
       - datalake
       - nats

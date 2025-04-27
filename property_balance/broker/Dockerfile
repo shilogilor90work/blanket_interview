@@ -10,7 +10,7 @@ COPY . .
 
 RUN go build -o broker
 
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["./broker"]
 
