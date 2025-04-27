@@ -10,6 +10,10 @@ type CreateRecord struct {
 	Type       string  `json:"type"`
 }
 
+func (m CreateRecord) GetPropertyID() string {
+	return m.PropertyID
+}
+
 type Record struct {
 	ID         uint      `json:"id"`
 	PropertyID string    `json:"property_id"`
@@ -28,4 +32,8 @@ type GetRecordsParams struct {
 	Sort       string `json:"sort"`
 	Page       int    `json:"page"`
 	Limit      int    `json:"limit"`
+}
+
+func (m GetRecordsParams) GetPropertyID() string {
+	return m.PropertyID
 }

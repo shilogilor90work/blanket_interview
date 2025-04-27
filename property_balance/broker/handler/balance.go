@@ -80,14 +80,14 @@ func processReport(report models.Report) string {
 // Handle the result of the monthly balance query
 func GetMonthlyBalance(w http.ResponseWriter, r *http.Request) {
 	// Custom response handler to process the result before sending
-	customResponseHandler := func(report models.Report) {
+	customResponseHandler := func(report models.Report) []byte {
 		// Process and format the report response into the desired string
 		formattedReport := processReport(report)
-
 		// Return the formatted response to the client
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(formattedReport))
+		return []byte(formattedReport)
 	}
 
 	// Call handleGetRequest with the custom response handler
