@@ -59,7 +59,9 @@ func main() {
 	// Subscribe to NATS subjects
 	go handler.ListenForCreateProperty(db)
 	go handler.ListenForCreateRecord(db)
+	go handler.ListenForGetRecords(db)
 	go handler.ListenForBalanceRequests(db)
+	go handler.ListenForMonthlyBalanceRequests(db)
 
 	// Block forever
 	select {}

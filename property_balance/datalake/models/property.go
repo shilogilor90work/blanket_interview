@@ -10,3 +10,7 @@ type Property struct {
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
 }
+
+type CreateProperty struct {
+	PropertyID string `gorm:"index;not null" json:"property_id"`
+}

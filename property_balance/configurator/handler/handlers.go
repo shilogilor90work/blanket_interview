@@ -73,29 +73,3 @@ func ListenForCreateRecord() {
 		}
 	})
 }
-
-// Listen for balance-related requests
-func ListenForBalanceRequests() {
-	natsHandler.Subscribe("configurator.balance.current", func(msg *nats.Msg) {
-		var request map[string]string
-		if err := json.Unmarshal(msg.Data, &request); err != nil {
-			log.Printf("Error unmarshalling balance request: %v", err)
-			return
-		}
-
-		propertyID := request["property_id"]
-		log.Printf("Received current balance request for property %s", propertyID)
-
-		// Query the current balance (simulate for now)
-		balance := 500.0 // Example balance
-		// Publish the balance to Datalake using natsHandler.Publish
-		if err := natsHandler.Publish("datalake.balance.current", map[string]interface{}{
-			"property_id": propertyID,
-			"balance":     balance,
-		}); err != nil {
-			log.Printf("Error publishing balance to Datalake: %v", err)
-		}
-	})
-
-	// Similar subscription logic for "property.balance.monthly" can go here
-}

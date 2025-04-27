@@ -19,3 +19,13 @@ type Record struct {
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
 }
+
+type GetRecordsParams struct {
+	PropertyID string `json:"property_id"`
+	Type       string `json:"type"`
+	From       string `json:"from"`
+	To         string `json:"to"`
+	Sort       string `json:"sort"`
+	Page       int    `json:"page"`
+	Limit      int    `json:"limit"`
+}

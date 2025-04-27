@@ -22,7 +22,6 @@ func main() {
 	// Subscribe to NATS subjects
 	go handler.ListenForCreateProperty()
 	go handler.ListenForCreateRecord()
-	go handler.ListenForBalanceRequests()
 
 	// Block forever (to keep the application running)
 	select {}
