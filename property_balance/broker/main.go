@@ -27,8 +27,8 @@ func main() {
 
 	// Start HTTP server in a goroutine to allow for simultaneous NATS handling
 	go func() {
-		log.Println("Broker service listening on :8080")
-		if err := http.ListenAndServe(":8080", r); err != nil {
+		log.Println("Broker service listening on :80")
+		if err := http.ListenAndServe(":80", r); err != nil {
 			log.Fatalf("Error starting HTTP server: %v", err)
 		}
 	}()
