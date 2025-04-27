@@ -1,0 +1,26 @@
+# Global configurations
+global:
+  scrape_interval: 15s  # Default scrape interval
+  evaluation_interval: 15s  # Default evaluation interval
+
+# Scrape configurations
+scrape_configs:
+  - job_name: 'prometheus'  # The job name for Prometheus itself
+    static_configs:
+      - targets: ['localhost:9090']  # Prometheus server itself for scraping metrics
+
+  - job_name: 'your_application'  # Replace with your service name
+    static_configs:
+      - targets: ['your_service_host:your_service_port']  # Target your service's metrics endpoint
+
+# Alerting configuration (optional)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']  # Replace with your Alertmanager endpoint
+
+# Rule files for alerting and recording rules (optional)
+rule_files:
+  - 'alert.rules'
+
+# Additional scrape configurations can go here as needed for other services

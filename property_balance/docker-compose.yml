@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+
+  # traefik:
+  #   image: traefik:v2.10
+  #   command:
+  #     - "--api.insecure=true"
+  #     - "--providers.docker=true"
+  #     - "--entrypoints.web.address=:80"
+  #   ports:
+  #     - "80:80"
+  #     - "8080:8080" # Traefik Dashboard
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  # client:
+  #   build: ./client
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.http.routers.client.rule=PathPrefix(`/`)"
+  #     - "traefik.http.services.client.loadbalancer.server.port=3000"
+  #   depends_on:
+  #     - broker
+
+  broker:
+    build: ./broker
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.broker.rule=PathPrefix(`/api`)"
+      - "traefik.http.services.broker.loadbalancer.server.port=8080"
+    environment:
+      - NATS_URL=nats://nats:4222
+    ports:
+      - "8080:8080"
+    depends_on:
+      - datalake
+      - nats
+
+  configurator:
+    build: ./configurator
+    environment:
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - datalake
+      - nats
+
+  datalake:
+    build: ./datalake
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/propertydb
+      - NATS_URL=nats://nats:4222
+    depends_on:
+      - postgres
+      - nats
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: propertydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  nats:
+    image: nats:2.10
+    ports:
+      - "4222:4222"
+      - "8222:8222" # monitoring
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+volumes:
+  postgres_data:
+
